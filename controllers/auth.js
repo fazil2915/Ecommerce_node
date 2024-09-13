@@ -74,6 +74,7 @@ export const login=async (req,res)=>{
             where:{email:email},
             include:{
                 seller:true,
+                buyer:true
             },
         })
         if(!user) return res.status(404).json({message:'User doesnt exist!'});
@@ -81,8 +82,17 @@ export const login=async (req,res)=>{
         //compare the password with user password
         const isMatch=await bcrypt.compare(password,user.password);
         if(!isMatch) return res.status(400).json({msg:"Invalid credential"});
-
-        //token sign 
+        
+         // Create token payload based on user role
+         let tokenPayload = { id: user.id, role: user.role };
+        
+         // Add sellerId or buyerId to the payload based on the user's role
+         if (user.role === 'SELLER' && user.seller) {
+             tokenPayload.sellerId = user.seller.id;
+         } else if (user.role === 'BUYER' && user.buyer) {
+             tokenPayload.buyerId = user.buyer.id;
+         }
+      
         const token=jwt.sign({id:user.userId},process.env.JWT_SECRET,{
             expiresIn:'1d'
         });

@@ -43,7 +43,7 @@ export const addProducts=async (req,res)=>{
 export const updateProduct = async (req, res) => {
     try {
         const { id: productId } = req.params; 
-        const { sellerId } = req.user; //get from user from jwt
+        
         const {
             name,
             category,
@@ -52,11 +52,11 @@ export const updateProduct = async (req, res) => {
             discount,
         } = req.body; 
 
-        // Check if the product exists and belongs to the seller
+        // Check if the product exists 
         const existingProduct = await prisma.product.findFirst({
             where: {
                 id: productId,
-                sellerId: sellerId, // Check if the product belongs to the seller
+                sellerId: sellerId, 
             },
         });
 
@@ -86,9 +86,8 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct=async (req,res)=>{
 try {
     const { id: productId } = req.params; 
-    const { sellerId } = req.user; //get from user from jwt
 
-     // Check if the product exists and belongs to the seller
+     // Check if the product exists 
      const existingProduct = await prisma.product.findFirst({
         where: {
             id: productId,

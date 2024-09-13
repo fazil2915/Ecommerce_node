@@ -6,6 +6,7 @@ import morgan from "morgan";
 import logger from "./utils/logger.js"
 import Auth from "./routes/auth.js";
 import Seller from "./routes/seller.js"
+import Buyer from "./routes/buyer.js"
 
 const app=express()
 
@@ -42,6 +43,8 @@ app.use(
 // })
 app.use('/api/user',Auth)
 app.use('/api/user/seller',Seller)
+app.use('/app/user/buyer',Buyer)
+
 //server
 app.listen(process.env.PORT||3000,()=>{
     try {

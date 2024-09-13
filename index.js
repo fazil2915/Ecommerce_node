@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import helmet from "helmet";
 import morgan from "morgan";
 import logger from "./utils/logger.js"
+import Auth from "./routes/auth.js";
 
 const app=express()
 
@@ -35,9 +36,11 @@ app.use(
 
 
 //api routes
-app.get("/",(req,res)=>{
-    res.send("hey there!!");
-})
+// app.use("/",(req,res)=>{
+//     res.send("hey there!!");
+// })
+app.use('/api/user',Auth)
+
 //server
 app.listen(process.env.PORT||3000,()=>{
     try {

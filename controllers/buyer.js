@@ -22,10 +22,6 @@ export const getProducts = async (req, res) => {
     }
 }
 
-//search for products by name & category
-
-
-
 //  Add to cart
 export const addToCart = async (req, res) => {
     try {
@@ -45,7 +41,7 @@ export const addToCart = async (req, res) => {
         // Find the buyer's cart
         let cart = await prisma.cart.findUnique({
             where: { buyerId: buyer.id },
-            include: { items: true } // Include items to check if the product already exists in the cart
+            include: { items: true } 
         });
 
         if (!cart) {
@@ -53,7 +49,7 @@ export const addToCart = async (req, res) => {
             cart = await prisma.cart.create({
                 data: {
                     buyer: {
-                        connect: { id: buyerId } // Connect the new cart to the existing buyer
+                        connect: { id: buyerId } 
                     }
                 }
             });
@@ -137,3 +133,36 @@ export const removeFromCart = async (req, res) => {
         res.status(500).json({ err: error.message });
     }
 };
+
+//search for products by name & category
+export const searchProduct=async(req,res)=>{
+    try {
+        const {
+            name,
+            category
+        }=req.body;
+        // Build the search query
+        const searchQuery = {
+            where: {},
+        };
+
+        // Add conditions to the query if parameters are provided
+        if (name) {
+            searchQuery.where.name = {
+                contains: name, // Use 'contains' for partial matching
+                mode: 'insensitive', // Case-insensitive search
+            };
+        }
+        if (category) {
+            searchQuery.where.category = category;
+        }
+
+        // Fetch the products based on the search criteria
+        const products = await prisma.product.findMany(searchQuery);
+
+        // Return the results
+        res.status(200).json({ products });
+    } catch (error) {
+        res.status(500).json({ err: error.message });
+    }
+}

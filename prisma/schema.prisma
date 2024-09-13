@@ -58,7 +58,7 @@ model Product {
   name        String
   category    Category
   description String
-  price       Float
+  price       Int
   discount    Int
   seller      Seller   @relation(fields: [sellerId], references: [id])
   sellerId    String

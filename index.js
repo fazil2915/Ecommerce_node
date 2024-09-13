@@ -5,6 +5,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import logger from "./utils/logger.js"
 import Auth from "./routes/auth.js";
+import Seller from "./routes/seller.js"
 
 const app=express()
 
@@ -40,7 +41,7 @@ app.use(
 //     res.send("hey there!!");
 // })
 app.use('/api/user',Auth)
-
+app.use('/api/user/seller',Seller)
 //server
 app.listen(process.env.PORT||3000,()=>{
     try {

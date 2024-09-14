@@ -1,0 +1,29 @@
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    container_name: backend
+    build:
+      context:    ./Backend
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://postgres:password@db:5432/postgres
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+volumes:
+  postgres-data:
+    driver: local

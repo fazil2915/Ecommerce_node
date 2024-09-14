@@ -1,0 +1,40 @@
+name: Assignment_nodejs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build docker image
+        run: docker build -t fazilrahman9846/nodejs-app .
+
+      - name: Publish image to Docker Hub
+        run: docker push fazilrahman9846/nodejs-app:latest
+
+  deploy:
+    needs: build
+    runs-on: nodejs-runner
+
+    steps:
+      - name: Log in to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Pull image from Docker Hub
+        run: docker pull fazilrahman9846/nodejs-app:latest
+
+      - name: Stop and remove old container
+        run: docker rm -f nodejs-app-container || true
+
+      - name: Run new container
+        run: docker run -d -p 5000:5000 --name nodejs-app-container fazilrahman9846/nodejs-app:latest

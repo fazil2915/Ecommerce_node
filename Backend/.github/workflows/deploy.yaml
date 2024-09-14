@@ -3,7 +3,7 @@ name: Assignment_nodejs
 on:
   push:
     branches:
-      - main
+     - main
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: nodejs-runner
+    runs-on: [self-hosted]
 
     steps:
       - name: Log in to Docker Hub

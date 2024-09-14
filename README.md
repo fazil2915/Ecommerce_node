@@ -33,6 +33,8 @@ npx prisma migrate dev --name init
 npx prisma generate
 ```````
 ## Deployment details
+(api url without token verify others api's can explore in api documentation)
+[Live](http://54.234.196.29:5000/api/user/buyer/get-Products).
  
 
 

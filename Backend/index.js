@@ -38,12 +38,12 @@ app.use(
 
 
 //api routes
-// app.use("/",(req,res)=>{
-//     res.send("hey there!!");
-// })
+app.use("/",(req,res)=>{
+    res.send("hey there!!");
+})
 app.use('/api/user',Auth)
 app.use('/api/user/seller',Seller)
-app.use('/app/user/buyer',Buyer)
+app.use('/api/user/buyer',Buyer)
 
 //server
 app.listen(process.env.PORT||5000,()=>{

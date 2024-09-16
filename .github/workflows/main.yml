@@ -34,17 +34,12 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Set up SSH key
-        run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" > /tmp/my-ec2-key.pem
-          chmod 600 /tmp/my-ec2-key.pem
-
       - name: SSH into EC2 and deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
-          key: /tmp/my-ec2-key.pem
+          key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             # Create a directory for your project if not already created
             mkdir -p /home/ubuntu/node_App
@@ -61,7 +56,6 @@ jobs:
             # Start up the services
             docker-compose up -d
 
-      - name: Clean up SSH key
-        run: rm -f /tmp/my-ec2-key.pem
+    
 
             

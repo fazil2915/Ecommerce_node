@@ -11,16 +11,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Log in to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build docker image
-        run:  docker build -t fazilrahman9846/nodejs-app ./Backend --file ./Backend/Dockerfile
-
-      - name: Publish image to Docker Hub
-        run: docker push fazilrahman9846/nodejs-app:latest
+      - name: Build and Push Docker Compose Services
+        run: |
+          docker-compose  build
+          docker-compose  push
 
   deploy:
     needs: build
@@ -33,14 +32,25 @@ jobs:
           chmod 600 /tmp/my-ec2-key.pem
 
       - name: SSH into EC2 and deploy
-        uses: appleboy/ssh-action@v0.1.6
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: /tmp/my-ec2-key.pem
           script: |
+            # Create a directory for your project if not already created
+            mkdir -p /home/ubuntu/node_App
+
+            # Navigate to the project directory
+            cd /home/ubuntu/node_App
+
+            # Stop and remove existing containers
+            docker-compose down || true
+
+            # Pull the latest images
             docker-compose pull
-            docker-compose down
+
+            # Start up the services
             docker-compose up -d
 
       - name: Clean up SSH key

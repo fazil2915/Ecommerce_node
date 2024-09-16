@@ -55,8 +55,7 @@ export const updateProduct = async (req, res) => {
         // Check if the product exists 
         const existingProduct = await prisma.product.findFirst({
             where: {
-                id: productId,
-                sellerId: sellerId, 
+                id: productId, 
             },
         });
 
@@ -91,7 +90,6 @@ try {
      const existingProduct = await prisma.product.findFirst({
         where: {
             id: productId,
-            sellerId: sellerId, 
         },
     });
     if (!existingProduct) {

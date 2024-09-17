@@ -53,7 +53,7 @@ jobs:
             fi
 
             # Docker login to pull images from Docker Hub
-            cd /home/ubuntu/node_App/Assignment_nodejs
+            cd /home/ubuntu/Assignment_nodejs
             echo "${{ secrets.DOCKER_PASSWORD }}" | sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
             # Stop and remove existing containers

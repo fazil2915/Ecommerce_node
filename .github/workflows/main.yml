@@ -46,9 +46,10 @@ jobs:
             cd /home/ubuntu/
 
             # Clone or pull the latest code from GitHub
-            if [ ! -d "Assignment_nodejs/.git" ]; then
+            if [ ! -d "/home/ubuntu/Assignment_nodejs/.git" ]; then
             git clone git@github.com:fazil2915/Assignment_nodejs.git 
             else
+            cd Assignment_nodejs
             git pull origin main
             fi
 

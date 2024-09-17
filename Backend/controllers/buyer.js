@@ -31,7 +31,7 @@ export const addToCart = async (req, res) => {
 
         // Find the buyer
         const buyer = await prisma.buyer.findUnique({
-            where: { userId: buyerId }
+            where: { id: buyerId }
         });
 
         if (!buyer) {

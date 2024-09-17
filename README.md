@@ -11,11 +11,11 @@ All complete details have covered in this link [Details](https://documenter.getp
 
 ## Technologies Used
 
->Backend: Node.js, Express.js for building RESTful APIs.
-Database: PostgreSQL
-Orm: Prisma
-Deployment: Aws Ec2
-
+- Backend: Node.js, Express.js for building RESTful APIs.
+- Database: PostgreSQL
+- Orm: Prisma
+- Deployment: Aws Ec2 using Gh runner (Autodeploy)
+- Others: docker, docker-compose
 ## Project config
 `````
 git clone [repo_url] (*main)
@@ -36,11 +36,11 @@ npx prisma generate
 (api url without token verify others api's can explore in api documentation)
 [Live](http://54.163.26.31:5000/api/user/buyer/get-Products).
 
-#### Working
+#### Gh workflow Working
 * Trigger on push to the main branch.
 * Build the application using Docker Compose, containerize it, and push the Docker images to a Docker registry.
 * Deploy by cloning the Git repository on the server, pulling the latest Docker image from the registry, and running Docker Compose.
-* Detailed with comments on [Gh work flow](https://github.com/fazil2915/Assignment_nodejs/blob/main/.github/workflow/main.yaml)
+* Detailed with comments on [Gh work flow](https://github.com/fazil2915/Assignment_nodejs/blob/main/.github/workflows/main.yml)
  
 
 

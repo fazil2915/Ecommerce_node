@@ -41,24 +41,29 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Create a directory for your project if not already created
-            mkdir -p /home/ubuntu/node_App
 
             # Navigate to the project directory
-            cd /home/ubuntu/node_App
+            cd /home/ubuntu/
+
+            # Clone or pull the latest code from GitHub
+            if [ ! -d ".git" ]; then
+            git clone git@github.com:fazil2915/Assignment_nodejs.git .
+            else
+            git pull origin main
+            fi
+
+            # Docker login to pull images from Docker Hub
+            cd /home/ubuntu/node_App/Assignment_nodejs
+            echo "${{ secrets.DOCKER_PASSWORD }}" | sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
             # Stop and remove existing containers
             sudo docker-compose down || true
-            
-            # Log in to Docker Hub
-            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
             # Pull the latest images
             sudo docker-compose pull
 
             # Start up the services
             sudo docker-compose up -d
-
     
 
             

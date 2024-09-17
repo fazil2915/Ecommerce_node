@@ -34,7 +34,13 @@ npx prisma generate
 ```````
 ## Deployment details
 (api url without token verify others api's can explore in api documentation)
-[Live](http://54.234.196.29:5000/api/user/buyer/get-Products).
+[Live](http://54.163.26.31:5000/api/user/buyer/get-Products).
+
+#### Working
+* Trigger on push to the main branch.
+* Build the application using Docker Compose, containerize it, and push the Docker images to a Docker registry.
+* Deploy by cloning the Git repository on the server, pulling the latest Docker image from the registry, and running Docker Compose.
+* Detailed with comments on [Gh work flow](https://github.com/fazil2915/Assignment_nodejs/blob/main/.github/workflow/main.yaml)
  
 
 

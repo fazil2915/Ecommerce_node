@@ -1,6 +1,6 @@
 # Assignment_nodejs
 ## Overview
-This project is a RESTful API service for an e-commerce platform, built using Node.js, Express.js, and PostgreSQL. It provides a robust backend solution for managing seller and buyers
+This project is a RESTful API service for an e-commerce platform, built using Node.js, Express.js, and PostgreSQL. It provides a robust backend solution for managing sellers and buyers in the e-commerce platform.
 ## Features
 * AUTHENTICATION
 * PRODUCT MANAGEMENT

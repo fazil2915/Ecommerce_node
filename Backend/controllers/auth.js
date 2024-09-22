@@ -82,16 +82,7 @@ export const login=async (req,res)=>{
         //compare the password with user password
         const isMatch=await bcrypt.compare(password,user.password);
         if(!isMatch) return res.status(400).json({msg:"Invalid credential"});
-        
-         // Create token payload based on user role
-         let tokenPayload = { id: user.id, role: user.role };
-        
-         // Add sellerId or buyerId to the payload based on the user's role
-         if (user.role === 'SELLER' && user.seller) {
-             tokenPayload.sellerId = user.seller.id;
-         } else if (user.role === 'BUYER' && user.buyer) {
-             tokenPayload.buyerId = user.buyer.id;
-         }
+       
       
         const token=jwt.sign({id:user.userId},process.env.JWT_SECRET,{
             expiresIn:'1d'
@@ -104,3 +95,4 @@ export const login=async (req,res)=>{
         res.status(500).json({err:error.message})
     }
 }
+
